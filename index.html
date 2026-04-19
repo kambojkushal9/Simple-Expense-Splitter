@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SplitWise - Expense Splitter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <canvas id="background-canvas"></canvas>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <span class="logo-text">Split<span class="highlight">Wise</span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#splitter">Splitter</a></li>
+                <li><a href="#history">History</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Split Expenses <span class="highlight">Effortlessly</span></h1>
+                <div class="typewriter-container">
+                    <span id="typewriter" class="typewriter"></span>
+                    <span class="cursor">|</span>
+                </div>
+                <p class="hero-description">Say goodbye to awkward money conversations with friends, roommates, and
+                    travel buddies.</p>
+                <button class="cta-button">Get Started <i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <div class="card-icon"><i class="fas fa-utensils"></i></div>
+                    <div class="card-text">Dinner - $120</div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-icon"><i class="fas fa-home"></i></div>
+                    <div class="card-text">Rent - $800</div>
+                </div>
+                <div class="floating-card card-3">
+                    <div class="card-icon"><i class="fas fa-car"></i></div>
+                    <div class="card-text">Road trip - $350</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <h2>Why Choose <span class="highlight">SplitWise</span>?</h2>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Fast & Easy</h3>
+                    <p>Split expenses in seconds with our intuitive interface.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Smart Calculations</h3>
+                    <p>Handles uneven splits, percentages, and shares with ease.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-history"></i></div>
+                    <h3>Expense History</h3>
+                    <p>Keep track of all your shared expenses in one place.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Splitter Section -->
+        <section id="splitter" class="splitter">
+            <h2>Expense <span class="highlight">Splitter</span></h2>
+            <div class="splitter-container">
+                <div class="expense-form">
+                    <div class="form-group">
+                        <label for="expense-name">Expense Name</label>
+                        <input type="text" id="expense-name" placeholder="e.g., Dinner at Mario's">
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-amount">Total Amount ($)</label>
+                        <input type="number" id="expense-amount" placeholder="0.00" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-date">Date</label>
+                        <input type="date" id="expense-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-payer">Paid By</label>
+                        <select id="expense-payer">
+                            <option value="" disabled selected>Select person</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="people-container">
+                    <h3>Split Between</h3>
+                    <div class="add-person">
+                        <input type="text" id="person-name" placeholder="Enter name">
+                        <button id="add-person-btn"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <div class="people-list" id="people-list">
+                        <!-- People will be added here dynamically -->
+                    </div>
+                </div>
+
+                <div class="split-options">
+                    <h3>Split Method</h3>
+                    <div class="split-method">
+                        <button class="split-btn active" data-method="equal">Equal</button>
+                        <button class="split-btn" data-method="percentage">Percentage</button>
+                        <button class="split-btn" data-method="custom">Custom</button>
+                    </div>
+                    <div id="split-config">
+                        <!-- Split configuration will be shown here based on selection -->
+                    </div>
+                </div>
+
+                <button id="calculate-btn" class="calculate-btn">Calculate Split</button>
+            </div>
+
+            <div class="results-container">
+                <h3>Results</h3>
+                <div id="results">
+                    <!-- Results will be shown here -->
+                    <p class="no-results">Enter expense details and calculate to see results.</p>
+                </div>
+                <button id="save-expense" class="save-btn">Save Expense</button>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section id="history" class="history">
+            <h2>Expense <span class="highlight">History</span></h2>
+            <div class="history-controls">
+                <div class="search-bar">
+                    <input type="text" id="search-history" placeholder="Search expenses...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <select id="filter-history">
+                    <option value="all">All Expenses</option>
+                    <option value="recent">Recent First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="highest">Highest Amount</option>
+                    <option value="lowest">Lowest Amount</option>
+                </select>
+            </div>
+            <div class="history-container" id="history-container">
+                <!-- History items will be added here dynamically -->
+                <p class="no-history">No expense history yet. Add some expenses to see them here.</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <h2>About <span class="highlight">SplitWise</span></h2>
+            <p>SplitWise is a web application designed to make splitting expenses with friends, roommates, or travel
+                companions easy and stress-free. Our mission is to simplify the process of tracking shared expenses and
+                ensure fairness in financial matters among groups.</p>
+            <div class="about-features">
+                <div class="about-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Simple, intuitive interface for splitting expenses</p>
+                </div>
+                <div class="about-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Multiple splitting methods to suit your needs</p>
+                </div>
+                <div class="about-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <p>Comprehensive expense history tracking</p>
+                </div>
+                <div class="about-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <p>No account required - works right in your browser</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-text">Split<span class="highlight">Wise</span></span>
+                    <p>Splitting expenses made simple.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#splitter">Splitter</a></li>
+                        <li><a href="#history">History</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@splitwise.com</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SplitWise. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
